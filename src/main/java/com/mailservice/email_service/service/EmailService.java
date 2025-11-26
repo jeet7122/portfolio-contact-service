@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class EmailService {
-    String pass = "qjevwczyrfjvqzci";
 
     @Autowired
     private JavaMailSender mailSender;
