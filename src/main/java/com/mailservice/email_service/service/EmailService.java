@@ -13,15 +13,21 @@ public class EmailService {
     private JavaMailSender mailSender;
 
     public void sendContactEmail(ContactRequest request) {
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setTo("khushiparikh2603@gmail.com"); // your receiving email
-        message.setSubject("New Contact Form Submission from " + request.getName());
-        message.setText(
-                "Name: " + request.getName() + "\n" +
-                        "Email: " + request.getEmail() + "\n" +
-                        "Message: \n" + request.getMessage()
-        );
+        try{
+            SimpleMailMessage message = new SimpleMailMessage();
+            message.setFrom(System.getenv("SPRING_MAIL_USERNAME"));
+            message.setTo("khushiparikh2603@gmail.com"); // your receiving email
+            message.setSubject("New Contact Form Submission from " + request.getName());
+            message.setText(
+                    "Name: " + request.getName() + "\n" +
+                            "Email: " + request.getEmail() + "\n" +
+                            "Message: \n" + request.getMessage()
+            );
 
-        mailSender.send(message);
+            mailSender.send(message);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException("Error: " + e.getMessage());
+        }
     }
 }
